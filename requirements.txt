@@ -1,4 +1,0 @@
-plaid-python
-pyyaml
-twilio
-numpy 
