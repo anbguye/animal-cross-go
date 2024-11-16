@@ -1,6 +1,8 @@
-package main //created package name 
- 
-import rl "github.com/gen2brain/raylib-go/raylib"
+package main //created package name
+
+import (
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 const (
 	screenWidth = 1000 
@@ -12,6 +14,7 @@ var (
 	bgColor = rl.NewColor(147,211,196,255) //background color
 
 	grassSprite rl.Texture2D //grass sprite
+
 	playerSprite rl.Texture2D //player sprite
 
 
@@ -45,6 +48,7 @@ func drawScene() { //draw scene
 		if tileMap[i] != 0 {
 			tileDest.X = tileDest.Width * float32(i % mapWidth)
 			tileDest.Y = tileDest.Height * float32(i / mapWidth)
+
 			tileSrc.X = tileSrc.Width * float32((tileMap[i]-1) % int(grassSprite.Width/int32(tileSrc.Width)))
 			tileSrc.Y = tileSrc.Height * float32((tileMap[i]-1) / int(grassSprite.Width/int32(tileSrc.Width)))
 
@@ -136,7 +140,8 @@ func update(){ //update game
 
 }
 
-func loadMap(){
+func loadMap(mapFile string){
+
 	mapWidth = 5
 	mapHeight = 5
 	for i := 0; i < (mapWidth * mapHeight); i++ {
@@ -167,7 +172,7 @@ func init(){ //initialize game
 
 	cam = rl.NewCamera2D(rl.NewVector2(float32(screenWidth/2), float32(screenHeight/2)), rl.NewVector2(float32(playerDest.X-(playerDest.Width/2)), float32(playerDest.Y-(playerDest.Height/2))), 0, 1) //initialize camera
 
-	loadMap()
+	loadMap("one.map")
 
 }
 
