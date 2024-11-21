@@ -1,6 +1,10 @@
 package main //created package name
 
 import (
+	"os"
+	"fmt"
+	"strings"
+	"strconv"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -31,7 +35,6 @@ var (
 	tileDest rl.Rectangle 
 	tileSrc rl.Rectangle 
 	tileMap []int 
-	srcMap []string
 	mapWidth, mapHeight int
 
 	playerSpeed float32 = 3 //player speed
@@ -140,14 +143,30 @@ func update(){ //update game
 
 }
 
-func loadMap(mapFile string){
-
-	mapWidth = 5
-	mapHeight = 5
-	for i := 0; i < (mapWidth * mapHeight); i++ {
-		tileMap = append(tileMap, 1)
+func loadMap(mapFile string) {
+	file, err := os.ReadFile(mapFile)
+	if err != nil {
+		fmt.Println("Error reading map file:", err)
+		os.Exit(1)
 	}
 
+	// Clean up the input by removing extra whitespace and splitting properly
+	lines := strings.Split(strings.TrimSpace(string(file)), "\n")
+	
+	// First line contains width and height
+	dimensions := strings.Fields(lines[0])
+	mapWidth, _ = strconv.Atoi(dimensions[0])
+	mapHeight, _ = strconv.Atoi(dimensions[1])
+	
+	// Process the map data
+	tileMap = make([]int, 0)
+	for i := 1; i < len(lines); i++ {
+		numbers := strings.Fields(lines[i])
+		for _, num := range numbers {
+			val, _ := strconv.Atoi(strings.TrimPrefix(num, "0"))
+			tileMap = append(tileMap, val)
+		}
+	}
 }
 
 func init(){ //initialize game
