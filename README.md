@@ -32,6 +32,6 @@ A simple 2D game built with Go and Raylib, featuring a character that can move a
 
 ## Asset Structure
 
-sprites/
-├── tilesets/
-│   └── Grass
+sprites/<br />
+├── tilesets/<br />
+│   └── Grass<br />
